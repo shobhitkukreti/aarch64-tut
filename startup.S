@@ -1,30 +1,64 @@
 /*Startup Code for ARMv8
 */
 
-.section .text
 
-.align 3
 
-.extern c_entry
-.type c_entry, @function
+
+.global EL3_EXCEPTION
 
 .global RESET
 .type RESET, @function
 
+.align 2
+.section .text
+
 RESET:
-mov sp, #0x80000000
-LDR x0, =EL3_EXCEPTION
-MSR VBAR_EL3, x0
+mov sp, #0x40000
+LDR x0, =isr
+
+MRS X3, VBAR_EL1
+MSR VBAR_EL1, x0
+
 svc #0x12
 BL c_entry
 B RESET
 
-.section .text
-.global EL3_EXCEPTION
-.type EL3_EXCEPTION, @function
-EL3_EXCEPTION:
-ldr x6, #0x64
-B EL3_EXCEPTION
 
+
+.align 11
+.section .vectors
+.global isr
+
+isr:
+	.align 7
+	SYNC:
+		B SYNC
+	.align 7
+	IRQ:
+		B IRQ
+	.align 7
+	FIQ:
+		B FIQ
+	.align 7
+	SERROR:
+		B SERROR
+	.align 7
+	SYNC_X:
+		B SYNC_X
+	.align 7
+	IRQ_X:
+		B IRQ_X
+	.align 7
+	FIQ_X:
+		B FIQ_X;
+	.align 7
+	SERROR_X:
+		B SERROR_X	
+	
+	
+	
+_sync:
+ldr x6, #0x64
+B _sync
 
 

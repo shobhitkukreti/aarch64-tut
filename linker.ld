@@ -1,5 +1,11 @@
+ENTRY(RESET);
+
 SECTIONS
      {
        . = 0x0;
-       .text : { *(.text) }
+       . = ALIGN(8);
+       .text : { 
+			*(.text) 
+			*(.vectors)
+	}
      }
