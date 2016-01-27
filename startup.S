@@ -18,9 +18,9 @@ LDR x0, =isr
 
 MRS X3, VBAR_EL1
 MSR VBAR_EL1, x0
-
-svc #0x12
-BL c_entry
+LDR x5, =user
+MSR ELR_EL1,x5
+B user
 B RESET
 
 
@@ -44,7 +44,8 @@ isr:
 		B SERROR
 	.align 7
 	SYNC_X:
-		B SYNC_X
+		mov x7, #0x55
+		eret
 	.align 7
 	IRQ_X:
 		B IRQ_X
@@ -62,3 +63,7 @@ ldr x6, #0x64
 B _sync
 
 
+user:
+	NOP
+	svc #12
+	

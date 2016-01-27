@@ -47,4 +47,13 @@ Note on Exceptions
 		There are very few banked registers, notably SPSR, ELR. Save the registers on stack before making an exception.
 
 
+		To Jump to a lower level, program the current level ELR_ELx register with the address where you want the processor to execute from. 
 
+		e.g.
+		LDR x5,=user
+		MSR ELR_EL1, x5.
+		This is initial value of userspace application.
+
+		In user function, we execute 'svc', which programs the ELR_EL1 with the next instruction address.
+		In SVC Handler, executing "eret" will return you back to user space.
+				
