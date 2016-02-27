@@ -15,13 +15,22 @@ Compile :
  	aarch64-none-elf-gcc file1.S file2.c -o main.elf -nostdlib -g -T linker.ld
 
 
-Emulate: qemu-system-aarch64 -M virt -cpu=cortex-A57 -m 1G -kernel main.elf -s -S 
+Emulate: qemu-system-aarch64 -M virt -cpu cortex-a57 -m 1G -kernel main.elf -s -S 
+
+With SemiHosting and UART:
+	qemu-system-aarch64 -M virt -cpu cortex-a57 -m 1G -kernel main.elf -nographic -semihosting
 
 Run GDB:
         aarch64-none-elf-gdb main.elf
 		target remote localhost:1234
 
 		
+
+UART: 0x09000000
+DRAM: 0 -128MB 0 - 08000000
+GIC_CPU: 0x08010000
+
+
 
 
 Note on Exceptions
