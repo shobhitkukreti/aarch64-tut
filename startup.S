@@ -65,5 +65,11 @@ B _sync
 
 user:
 	NOP
+	mov x6, #0x09000000
+	MOV x8, #65
+	STR x8, [x6]
 	svc #12
 	
+
+__uart:
+.word 0x09000000

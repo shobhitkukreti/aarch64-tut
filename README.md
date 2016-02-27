@@ -1,4 +1,4 @@
-The ARMv8 or AArch64 bit processor will never be used in bare metal code.This bare-metal-ish code is written for understanding. Since it is emulated on QEMU you will probably not burn something down or maybe you will
+The ARMv8 or AArch64 bit processor will never be used in bare metal code.This bare-metal-ish code is written for understanding the programmer's model. Since it is emulated on QEMU you will probably not burn something down or maybe you will.
 
 1) The software runs on an emulated Cortex-A57 on QEMU
 
@@ -27,7 +27,7 @@ Run GDB:
 Note on Exceptions
 
 		ARMv8 has Vector Base Address which can be fixed by writing to a register VBAR_ELx. 
-		Vectors have a space of 128 bytes of 32 instructions.
+		Vectors have a space/offset of 128 bytes or 32 instructions.
 		
 		.align 7 /* gives 128 byte alignment */
 

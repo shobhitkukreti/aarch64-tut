@@ -1,11 +1,39 @@
 ENTRY(RESET);
 
+MEMORY
+{
+	flash (rx) : ORIGIN = 0x0, LENGTH = 128M
+	ram (rwx) : ORIGIN = 0x80000000, LENGTH = 2048M
+}
+
+
 SECTIONS
-     {
-       . = 0x0;
-       . = ALIGN(8);
-       .text : { 
-			*(.text) 
-			*(.vectors)
-	}
-     }
+{
+	.text :	
+	     {
+		     . = ALIGN(8);
+		     *(.text) 
+		     *(.vectors)
+
+	     } > flash
+
+
+.data :
+{
+	. = ALIGN(8);
+	*(.data)
+
+} > flash AT > ram	
+
+
+
+.bss :
+{
+	. = ALIGN(8);
+	*(.bss)
+	*(COMMON)
+	
+} > ram
+
+
+}
