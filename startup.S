@@ -2,7 +2,7 @@
 */
 
 
-
+.equ UART, 0x09000000
 
 .global EL3_EXCEPTION
 
@@ -13,15 +13,16 @@
 .section .text
 
 RESET:
-mov sp, #0x40000
+MOV SP, #0x40000
 LDR x0, =isr
 
 MRS X3, VBAR_EL1
+MRS X9, CurrentEL
+ASR X9, X9, #2
 MSR VBAR_EL1, x0
 LDR x5, =user
 MSR ELR_EL1,x5
-B user
-B RESET
+eret
 
 
 
@@ -44,8 +45,13 @@ isr:
 		B SERROR
 	.align 7
 	SYNC_X:
-		mov x7, #0x55
-		eret
+		ADD X7, X7, #1
+		MRS X9, CurrentEL
+		ASR X9, X9, #2
+		LDR X5, =user
+		MSR ELR_EL1, x5
+		ERET
+	
 	.align 7
 	IRQ_X:
 		B IRQ_X
@@ -58,18 +64,13 @@ isr:
 	
 	
 	
-_sync:
-ldr x6, #0x64
-B _sync
-
 
 user:
 	NOP
-	mov x6, #0x09000000
-	MOV x8, #65
-	STR x8, [x6]
-	svc #12
-	
+	mov x6, UART
+	MOV x8, #66
+	MRS X9, CurrentEL
+	ASR X9, X9, #2
+	STR X8, [X6]
+	SVC #12 /* synchrnous exception */
 
-__uart:
-.word 0x09000000
