@@ -48,8 +48,9 @@ isr:
 		ADD X7, X7, #1
 		MRS X9, CurrentEL
 		ASR X9, X9, #2
-		LDR X5, =user
 		MSR ELR_EL1, x5
+		NOP
+		NOP
 		ERET
 	
 	.align 7
@@ -63,8 +64,6 @@ isr:
 		B SERROR_X	
 	
 	
-	
-
 user:
 	NOP
 	mov x6, UART
@@ -73,4 +72,7 @@ user:
 	ASR X9, X9, #2
 	STR X8, [X6]
 	SVC #12 /* synchrnous exception */
+	NOP
+	NOP
+	B user
 
