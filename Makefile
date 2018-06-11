@@ -1,6 +1,10 @@
-CC=aarch64-none-elf-gcc
-LD=aarch64-none-elf-ld
-
+CC_PATH=aarch64-elf
+#CC=aarch64-none-elf-gcc
+#CC=aarch64-linux-gnu-gcc
+#LD=aarch64-none-elf-ld
+#LD=aarch64-linux-gnu-ld
+CC=${CC_PATH}-gcc
+LD=${CC_PATH}-ld
 all: main
 
 startup.o: startup.S
