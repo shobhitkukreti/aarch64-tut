@@ -15,6 +15,8 @@ main.o: main.c
 
 main:startup.o main.o
 	$(LD) -g -T linker.ld startup.o main.o -o main.elf -nostdlib
+main_bin:startup.o main.o
+	${LD} -g -T linker.ld startup.o main.o --oformat binary -o main.bin -nostdlib
 
 clean:
 	rm -rf *.o *.elf 

@@ -65,4 +65,10 @@ Note on Exceptions
 
 		In user function, we execute 'svc', which programs the ELR_EL1 with the next instruction address.
 		In SVC Handler, executing "eret" will return you back to user space.
-				
+
+2018:
+# For SMC Mode QEMU uses -bios argument to load from ROM Boot Loader. The file format is binary
+aarch64-elf-objcopy -O binary main.elf main.bin 				
+
+# QEMU CMD Line for SMC EMulation
+qemu-system-aarch64 -M virt -cpu cortex-a57 -smp cpus=4 -machine secure=on -m 1G -bios main.bin -semihosting -nographic -s -S

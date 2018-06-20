@@ -16,8 +16,22 @@
 .section .text
 
 RESET:
+mov x0, #255
+mov x1, 0x80000000
+mov x2, 0x40000000
+ldr x6, UART
+MOV x8, #66
+	#	ASR X9, X9, #2
+STR X8, [X6]
+MRS X9, CurrentEL
+nop
+nop
 #MOV SP, #0x80000000
 LDR x0, =isr
+MOV x5, #0x8010000
+ldr x1,[x5]
+nop
+
 
 MRS X9, CurrentEL
 MSR SPSel, #1
