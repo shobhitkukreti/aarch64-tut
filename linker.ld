@@ -2,7 +2,8 @@ ENTRY(RESET);
 
 MEMORY
 {
-	flash (rx) : ORIGIN = 0x0, LENGTH = 128M
+	rbl (rx) : ORIGIN = 0x0, LENGTH = 2M
+	flash(rx): ORIGIN = 0x200000, LENGTH = 8M
 	/* ram (rwx) : ORIGIN = 0x80000000, LENGTH = 2048M */
 	ram (rwx) : ORIGIN = 0x40000000, LENGTH = 2048M
 }
@@ -23,14 +24,14 @@ SECTIONS
 		*(.text);
 		*(.vectors);
 
-	} > flash
+	} > rbl
 	
 
 	.rodata :
       {
         *(.rodata)
         rodata_end = .;
-      } > flash
+      } > rbl
 	
 	
 
@@ -40,7 +41,7 @@ SECTIONS
 		*(.data);
 		*(.data*)
 
-	} > ram AT > flash
+	} > ram AT > rbl
 	data_load_start = LOADADDR(.data);	
 
 
