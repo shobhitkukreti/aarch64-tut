@@ -2,7 +2,7 @@ ENTRY(RESET);
 
 MEMORY
 {
-	rbl (rx) : ORIGIN = 0x0, LENGTH = 2M
+	rbl (rx) : ORIGIN = 0x80000000, LENGTH = 2M
 	flash(rx): ORIGIN = 0x200000, LENGTH = 8M
 	/* ram (rwx) : ORIGIN = 0x80000000, LENGTH = 2048M */
 	ram (rwx) : ORIGIN = 0x40000000, LENGTH = 2048M

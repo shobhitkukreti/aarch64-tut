@@ -41,14 +41,15 @@ MRS X9, CurrentEL
 
 /* Setup SCR_EL3 */
 ORR x0,x0,  #(1<<10) 
-ORR x0,x0,  #(1<< 0) 
+/*ORR x0,x0,  #(1<< 0)*/
 MSR SCR_EL3, x0
 
 /* Setup HCR_EL2 */
 MSR HCR_EL2, XZR
 MOV X12, #(1<<31)
 MSR HCR_EL2, X12
-MOV X0, #0b01001 // DAIF=0000
+//MOV X0, #0b01001 // DAIF=0000 // EL2h
+MOV X0, #0b00101 // DAIF=0000 // EL1h
 MSR SPSR_EL3, X0
 
 ADR x5, KERNEL_NS
